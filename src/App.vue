@@ -1,32 +1,37 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
+    <Header v-if="isVisible" />
+    <router-view />
+    <div class="overlay d-none"></div>
   </div>
 </template>
 
+<script>
+import { mapGetters } from 'vuex';
+import messages from '@/utils/messages';
+import Header from '@/components/app/Header';
+
+export default {
+  components: {
+    Header,
+  },
+  computed: {
+    ...mapGetters(['getError']),
+    isVisible() {
+      return (
+        this.$route.name !== 'Login' && this.$route.name !== 'PageNotFound'
+      );
+    },
+  },
+  watch: {
+    error(fbError) {
+      this.$error(messages[fbError.code] || messages.default);
+    },
+  },
+};
+</script>
+
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
+@import '~materialize-css/dist/css/materialize.min.css';
+@import 'assets/css/index.css';
 </style>
