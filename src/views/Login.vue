@@ -78,8 +78,8 @@ import messages from '@/utils/messages';
 export default {
   name: 'LoginPage',
   data: () => ({
-    email: '',
-    password: '',
+    email: 'test@test.com',
+    password: 'qwerty123',
   }),
   validations: {
     email: { required, email },
