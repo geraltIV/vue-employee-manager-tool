@@ -4,9 +4,9 @@
 
     <div v-else>
       <Navbar
+        :department-list="departmentList"
         @search="search = $event"
         @filter="filter = $event"
-        :department-list="this.departmentList"
       />
       <EmployeesTable
         :employees-list="employeesSearch"
@@ -14,7 +14,7 @@
       />
       <PaginateComponent
         v-model="page"
-        :page-count="Math.ceil(this.allEmployees.length / 5)"
+        :page-count="Math.ceil(allEmployees.length / 5)"
         :click-handler="pageChangeHandler"
         :prev-text="'<'"
         :next-text="'>'"
@@ -22,16 +22,17 @@
         :page-class="'waves-effect'"
       />
       <ConfirmationModal
-        :id="this.employeeId"
-        @closeModal="closeModal"
         v-if="isVisible"
+        :id="employeeId"
+        @closeModal="closeModal"
       />
     </div>
   </div>
 </template>
 
 <script>
-const DEFAULT_DEPARTMENTS = 'All departments';
+// const DEFAULT_DEPARTMENTS = 'All departments';
+import { ITEMS_PER_PAGE, DEFAULT_DEPARTMENT } from '@/helpers/constants';
 import { mapGetters, mapActions } from 'vuex';
 import Navbar from '@/components/app/Navbar';
 import EmployeesTable from '@/components/EmployeesTable';
@@ -57,23 +58,21 @@ export default {
   },
   async mounted() {
     await this.retrieveAllEmployees();
+    this.loading = false;
 
     this.departmentList = this.allEmployees.reduce(
       (acc, i) => (!acc.includes(i.department) ? [...acc, i.department] : acc),
       []
     );
 
-    this.departmentList.unshift(DEFAULT_DEPARTMENTS);
-
-    this.loading = false;
-
+    this.departmentList.unshift(DEFAULT_DEPARTMENT);
     this.filter = this.departmentList[0];
   },
   computed: {
     ...mapGetters(['allEmployees']),
     employeesFiltered() {
       return [...this.allEmployees].filter((el) =>
-        this.filter === DEFAULT_DEPARTMENTS
+        this.filter === DEFAULT_DEPARTMENT
           ? el.department
           : el.department === this.filter
       );
@@ -98,10 +97,10 @@ export default {
     },
     pageChangeHandler(page) {
       this.page = page;
-      this.pageSize = page * 5;
+      this.pageSize = page * ITEMS_PER_PAGE;
     },
     calculate() {
-      return this.pageSize - 5;
+      return this.pageSize - ITEMS_PER_PAGE;
     },
   },
 };

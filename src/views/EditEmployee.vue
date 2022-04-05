@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <Form :employee="this.employeeItem" :is-edit="true" />
+    <Form :employee="employeeItem" :is-edit="true" />
   </div>
 </template>
 
@@ -16,9 +16,7 @@ export default {
     employeeItem: {},
   }),
   mounted() {
-    this.$route.params.employee
-      ? (this.employeeItem = this.$route.params.employee)
-      : {};
+    this.employeeItem = this.$route.params?.employee || {};
   },
 };
 </script>

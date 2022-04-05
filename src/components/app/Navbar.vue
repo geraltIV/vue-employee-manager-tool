@@ -8,7 +8,6 @@
             placeholder="Search for employee"
             type="text"
             class="black-text"
-            v-model="filteredName"
             @input="$emit('search', $event.target.value)"
           />
         </div>
@@ -41,7 +40,6 @@ export default {
   name: 'NavbarComponent',
   data: () => ({
     select: '',
-    filteredName: '',
   }),
   props: {
     departmentList: {

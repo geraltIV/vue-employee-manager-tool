@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <div class="card">
+      <span class="card-title">Employee #{{ id }} profile</span>
       <div class="card-content black-text">
         <blockquote>Department:</blockquote>
         <p>{{ this.department }}</p>
@@ -18,8 +19,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-
 export default {
   name: 'EmployeeProfilePage',
   data: () => ({
@@ -29,15 +28,18 @@ export default {
     id: '',
   }),
   mounted() {
-    this.fullName = this.$route.params.name;
-    this.department = this.$route.params.department;
-    this.note = this.$route.params.note;
-    this.id = this.$route.params.id;
-  },
-  computed: {
-    ...mapGetters({ allEmployees: 'allEmployees' }),
+    const { name, department, note, id } = (this.fullName = this.$route.params);
+
+    this.fullName = name;
+    this.department = department;
+    this.note = note;
+    this.id = id;
   },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.btn {
+  margin-top: 24px;
+}
+</style>

@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import { NOT_AUTH_PAGES_NAME } from '@/helpers/constants';
 import { mapGetters } from 'vuex';
 import messages from '@/utils/messages';
 import Header from '@/components/app/Header';
@@ -18,9 +19,7 @@ export default {
   computed: {
     ...mapGetters(['getError']),
     isVisible() {
-      return (
-        this.$route.name !== 'Login' && this.$route.name !== 'PageNotFound'
-      );
+      return !NOT_AUTH_PAGES_NAME.includes(this.$route.name);
     },
   },
   watch: {

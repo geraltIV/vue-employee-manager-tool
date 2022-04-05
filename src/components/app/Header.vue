@@ -2,7 +2,7 @@
   <nav class="amber">
     <div class="container">
       <div class="header-wrapper">
-        <router-link to="/" class="">Home Page</router-link>
+        <router-link to="/" class="link black-text">Home Page</router-link>
         <button
           class="btn waves-effect blue darken-4 white-text btn-medium waves-light"
           @click="logOut"
@@ -39,5 +39,8 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.link {
+  font-weight: bold;
 }
 </style>

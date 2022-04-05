@@ -18,6 +18,7 @@
               v-for="employee in employeesList"
               :key="employee.id"
               @click="goToEmployeeProfile(employee)"
+              class="pointer"
             >
               <td>{{ employee.id }}</td>
               <td :class="{ active: employee.name.length }">

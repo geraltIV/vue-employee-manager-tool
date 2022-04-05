@@ -65,6 +65,7 @@
 </template>
 
 <script>
+import { DEPARTMENTS_LIST } from '@/helpers/constants';
 import { mapActions } from 'vuex';
 import { required } from 'vuelidate/lib/validators';
 import M from 'materialize-css';
@@ -76,7 +77,7 @@ export default {
     department: { required },
   },
   data: () => ({
-    departmentList: ['Development', 'Management', 'QA', 'BA', 'SRE'],
+    departmentList: [],
     name: '',
     department: '',
     note: '',
@@ -93,11 +94,17 @@ export default {
     },
   },
   mounted() {
-    setTimeout(() => {
-      this.name = !this.isEdit ? '' : this.employee.name;
-      this.department = !this.isEdit ? '' : this.employee.department;
-      this.note = !this.isEdit ? '' : this.employee.note;
-    }, 0);
+    this.departmentList = DEPARTMENTS_LIST;
+
+    if (this.isEdit) {
+      const { name, department, note } = this.employee;
+
+      setTimeout(() => {
+        this.name = name;
+        this.department = department;
+        this.note = note;
+      }, 0);
+    }
 
     setTimeout(() => {
       this.select = M.FormSelect.init(this.$refs.select);
@@ -125,15 +132,13 @@ export default {
 
       if (this.isEdit) {
         await this.updateEmployee(formData);
-        await this.$message('Employee info was updated!');
-      }
-
-      if (!this.isEdit) {
+        this.$message('Employee info was updated!');
+      } else {
         await this.createNewEmployee(formData);
-        await this.$message('New employee was created!');
+        this.$message('New employee was created!');
       }
 
-      await this.$router.push('/dashboard');
+      this.$router.push('/dashboard');
     },
   },
 };

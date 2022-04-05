@@ -54,6 +54,10 @@ html, body, #app {
 .auth-card {
     width: 500px;
 }
+.card-title {
+    display: block;
+    padding: 24px 24px 0 24px;
+}
 .auth-submit {
     width: 100%;
 }
@@ -165,9 +169,6 @@ html, body, #app {
 .currency-line span {
     font-size: 1.5rem;
 }
-/*.bill-card {*/
-/*    height: 310px;*/
-/*}*/
 .pointer {
     cursor: pointer;
 }
